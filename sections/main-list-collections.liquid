@@ -1,0 +1,103 @@
+<div class="container" style="margin-top: 80px;">
+
+	<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+		{% for collection in collections %}
+		<div class="col">
+			<div class="card h-100">
+
+				{% if collection.image %}
+					<a href="{{ collection.url }}">
+						<img class="img-fluid" alt="{{ collection.image.alt }}" src="{{ collection.image | image_url: width: 650, height: 650 | image_tag: collection.image.alt }}">
+					</a>
+				{% endif %}
+
+				<div class="card-body">
+					<h5 class="card-title">{{ collection.title }}</h5>
+					<p class="card-text">{{ collection.description | truncate: 60, '...' }}</p>
+
+					{% if collection.products_count > 0 %}
+						<small>Prodotti nella collezione: {{ collection.products_count }}</small>
+					{% endif %}
+				</div>
+				
+				<div class="card-footer bg-white border-top-0 pb-3">
+					<a href="{{ collection.url }}" class="btn btn-primary">Vai alla collezione</a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+</div>
+
+{%- comment -%}
+
+{% schema %}
+{
+  "name": "t:sections.main-list-collections.name",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.main-list-collections.settings.title.label",
+      "default": "Collections"
+    },
+    {
+      "type": "select",
+      "id": "sort",
+      "options": [
+        {
+          "value": "alphabetical",
+          "label": "t:sections.main-list-collections.settings.sort.options__1.label"
+        },
+        {
+          "value": "alphabetical_reversed",
+          "label": "t:sections.main-list-collections.settings.sort.options__2.label"
+        },
+        {
+          "value": "date_reversed",
+          "label": "t:sections.main-list-collections.settings.sort.options__3.label"
+        },
+        {
+          "value": "date",
+          "label": "t:sections.main-list-collections.settings.sort.options__4.label"
+        },
+        {
+          "value": "products_high",
+          "label": "t:sections.main-list-collections.settings.sort.options__5.label"
+        },
+        {
+          "value": "products_low",
+          "label": "t:sections.main-list-collections.settings.sort.options__6.label"
+        }
+      ],
+      "default": "alphabetical",
+      "label": "t:sections.main-list-collections.settings.sort.label"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.main-list-collections.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.main-list-collections.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.main-list-collections.settings.image_ratio.options__3.label"
+        }
+      ],
+      "default": "adapt",
+      "label": "t:sections.main-list-collections.settings.image_ratio.label",
+      "info": "t:sections.main-list-collections.settings.image_ratio.info"
+    }
+  ]
+}
+{% endschema %}
+
+{%- endcomment -%}
